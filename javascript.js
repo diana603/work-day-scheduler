@@ -1,22 +1,32 @@
-var hours = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
+var hours = ["9", "10", "11", "12", "1", "2", "3", "4", "5"];
 
-hours.forEach(element => {
+hours.forEach(hour => {
     // created row for time input and save button 
     var tableRow = $('<tr>');
     // created row description for time 
-    var time = $('<td>').text(element);
+    var time = $('<td>').text(hour);
     time.attr("class", "hour");
     // created row description for input
     var inputField = $('<td>');
     var input = $('<input>');
-    input.attr("id", element);
+    input.attr("id", "input" + hour);
+    input.attr("data-id", hour)
+
+    input.val(sessionStorage.getItem("input" + hour));
+
     inputField.append(input);
+
+    if (moment().isBefore(hour)) {
+        inputField.attr("class", "previous");
+    } else if (moment().isAfter(hour)) {
+        inputField.attr("class", "future");
+    }
 
     // created row descripton for button 
     var saveButton = $('<td>');
     var btn = $('<button>');
     btn.attr("class", "saveBtn")
-    btn.attr("id", element);
+    btn.attr("id", hour);
 
     saveButton.append(btn)
 
@@ -24,20 +34,21 @@ hours.forEach(element => {
     $(".calendar").append(tableRow);
 
 });
+// created click event for the save button 
+$(".saveBtn").on('click', function () {
 
-$(".saveBtn").on('click', function (e) {
-
-    currentButton = e.target;
+    currentButton = $(this);
 
     console.log(currentButton)
 
-    var buttonId = currentButton.getAttribute("id");
+    var buttonId = currentButton.attr("id");
+    console.log(buttonId);
 
-    console.log(buttonId)
+    var inputElmVal = $("#input" + buttonId).val();
 
+    console.log(inputElmVal);
 
-
-    //sessionStorage.setItem(JSON.stringify());
+    sessionStorage.setItem("input" + buttonId, inputElmVal);
 
 })
 $('#currentDay').text(moment().format('MMMM Do YYYY'));
