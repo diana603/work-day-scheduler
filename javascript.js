@@ -32,7 +32,7 @@ hours.forEach(hour => {
     var btn = $('<button>');
     btn.attr("class", "saveBtn")
     btn.attr("id", hour);
-
+    // appended save btn 
     saveButton.append(btn)
 
     tableRow.append(time, inputField, saveButton);
@@ -41,22 +41,14 @@ hours.forEach(hour => {
 });
 // created click event for the save button 
 $(".saveBtn").on('click', function () {
-
     currentButton = $(this);
-
     console.log(currentButton)
-
     var buttonId = currentButton.attr("id");
     console.log(buttonId);
-
     var inputElmVal = $("#input" + buttonId).val();
-
     console.log(inputElmVal);
-
     sessionStorage.setItem("input" + buttonId, inputElmVal);
-
 })
 $('#currentDay').text(moment().format('MMMM Do YYYY'));
 
 
-// event lister click when click on a button how to get the table description before it. how to select the input field to save the different data. could have class like time input button. or jquery.
