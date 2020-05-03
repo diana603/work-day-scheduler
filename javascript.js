@@ -1,25 +1,30 @@
-var hours = ["9", "10", "11", "12", "1", "2", "3", "4", "5"];
+var hours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
 
 hours.forEach(hour => {
     // created row for time input and save button 
     var tableRow = $('<tr>');
     // created row description for time 
-    var time = $('<td>').text(hour);
+    var time = $('<td>').text(hour < 13 ? hour + "am" : hour - 12 + "pm");
     time.attr("class", "hour");
     // created row description for input
     var inputField = $('<td>');
     var input = $('<input>');
     input.attr("id", "input" + hour);
     input.attr("data-id", hour)
-
+    // created storage of user inpute 
     input.val(sessionStorage.getItem("input" + hour));
 
     inputField.append(input);
+    console.log(moment().isBefore("2020-05-02T20:00:00"
 
-    if (moment().isBefore(hour)) {
-        inputField.attr("class", "previous");
-    } else if (moment().isAfter(hour)) {
+    ));
+    // created past present and future colors 
+    if (moment().hour() > hour) {
+        inputField.attr("class", "past");
+    } else if (moment().hour() < hour) {
         inputField.attr("class", "future");
+    } else {
+        inputField.attr("class", "present");
     }
 
     // created row descripton for button 
